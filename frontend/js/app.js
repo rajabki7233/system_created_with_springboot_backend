@@ -263,6 +263,86 @@ async function loadAllStudents() {
         console.error('Error loading students:', error);
     }
 }
+// Add this to your existing app.js
+
+// Navigation helper
+function navigateTo(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+    document.getElementById(page).classList.add('active-page');
+    
+    document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+    document.querySelector(`.sidebar-nav a[data-page="${page}"]`).classList.add('active');
+    
+    const titles = {
+        'overview': 'Overview',
+        'students': 'All Students',
+        'add-student': 'Add Student',
+        'profile': 'My Profile',
+        'settings': 'Settings'
+    };
+    document.getElementById('pageTitle').textContent = titles[page] || 'Dashboard';
+}
+
+// Menu toggle for mobile
+document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.querySelector('.sidebar');
+    
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('open');
+        });
+    }
+    
+    // Close sidebar on outside click (mobile)
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                sidebar.classList.remove('open');
+            }
+        }
+    });
+});
+
+// Export data function
+function exportData() {
+    const students = window.allStudents || [];
+    if (students.length === 0) {
+        alert('No data to export');
+        return;
+    }
+    
+    // Create CSV
+    let csv = 'ID,Name,Email,Age\n';
+    students.forEach(s => {
+        csv += `${s.id},"${s.name}","${s.email}",${s.age}\n`;
+    });
+    
+    // Download
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'students_data.csv';
+    a.click();
+}
+
+// Edit profile
+function editProfile() {
+    alert('Profile editing feature coming soon!');
+}
+
+// Theme settings
+function setTheme(theme) {
+    document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    if (theme === 'dark') {
+        document.body.classList.add('dark-theme');
+    } else {
+        document.body.classList.remove('dark-theme');
+    }
+}
 
 function filterStudents(searchTerm) {
     const table = document.getElementById('studentsTable');
