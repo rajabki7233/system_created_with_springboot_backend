@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Student Management</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>Student Management</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="active" data-page="overview">
+                    <span>📊</span> Overview
+                </a>
+                <a href="#" data-page="students">
+                    <span>👥</span> Students
+                </a>
+                <a href="#" data-page="add-student">
+                    <span>➕</span> Add Student
+                </a>
+                <a href="#" data-page="profile">
+                    <span>👤</span> Profile
+                </a>
+            </nav>
+            <button class="logout-btn" id="logoutBtn">Logout</button>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="dashboard-main">
+            <header class="dashboard-header">
+                <h1 id="pageTitle">Overview</h1>
+                <div class="user-info">
+                    <span id="userName">Welcome, User</span>
+                </div>
+            </header>
+            
+            <div class="dashboard-content">
+                <!-- Overview Page -->
+                <div id="overview" class="page">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Total Students</h3>
+                            <p id="totalStudents">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Average Age</h3>
+                            <p id="averageAge">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Youngest Student</h3>
+                            <p id="youngestAge">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Oldest Student</h3>
+                            <p id="oldestAge">0</p>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-students">
+                        <h2>Recent Students</h2>
+                        <table class="students-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Age</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentStudentsTable">
+                                <tr><td colspan="4" class="text-center">Loading students...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Students Page -->
+                <div id="students" class="page" style="display:none;">
+                    <div class="page-header">
+                        <h2>All Students</h2>
+                        <input type="text" id="searchStudents" placeholder="Search students..." class="search-input">
+                    </div>
+                    <table class="students-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Age</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsTable">
+                            <tr><td colspan="4" class="text-center">Loading students...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Add Student Page -->
+                <div id="add-student" class="page" style="display:none;">
+                    <h2>Add New Student</h2>
+                    <form id="addStudentForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="studentName">Name</label>
+                            <input type="text" id="studentName" placeholder="Enter student name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="studentEmail">Email</label>
+                            <input type="email" id="studentEmail" placeholder="Enter student email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="studentAge">Age</label>
+                            <input type="number" id="studentAge" placeholder="Enter student age" required>
+                        </div>
+                        <div id="addStudentError" class="error-message" style="display: none;"></div>
+                        <div id="addStudentSuccess" class="success-message" style="display: none;"></div>
+                        <button type="submit" class="btn-primary">Add Student</button>
+                    </form>
+                </div>
+                
+                <!-- Profile Page -->
+                <div id="profile" class="page" style="display:none;">
+                    <h2>My Profile</h2>
+                    <div class="profile-card">
+                        <div class="profile-info">
+                            <p><strong>Name:</strong> <span id="profileName"></span></p>
+                            <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+                            <p><strong>Age:</strong> <span id="profileAge"></span></p>
+                            <p><strong>Member Since:</strong> <span id="profileJoined"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/app.js"></script>
+</body>
+</html>
