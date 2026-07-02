@@ -3,139 +3,373 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Student Management</title>
+    <title>Dashboard - Student Management System</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="dashboard-container">
         <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="sidebar-header">
-                <h2>Student Management</h2>
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="brand-text">
+                    <h2>StudentMS</h2>
+                    <span>Management System</span>
+                </div>
             </div>
+            
             <nav class="sidebar-nav">
                 <a href="#" class="active" data-page="overview">
-                    <span>📊</span> Overview
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Overview</span>
                 </a>
                 <a href="#" data-page="students">
-                    <span>👥</span> Students
+                    <i class="fas fa-users"></i>
+                    <span>Students</span>
                 </a>
                 <a href="#" data-page="add-student">
-                    <span>➕</span> Add Student
+                    <i class="fas fa-user-plus"></i>
+                    <span>Add Student</span>
                 </a>
                 <a href="#" data-page="profile">
-                    <span>👤</span> Profile
+                    <i class="fas fa-user-circle"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="#" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
                 </a>
             </nav>
-            <button class="logout-btn" id="logoutBtn">Logout</button>
-        </div>
+            
+            <div class="sidebar-footer">
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
         
         <!-- Main Content -->
-        <div class="dashboard-main">
+        <main class="dashboard-main">
+            <!-- Top Header -->
             <header class="dashboard-header">
-                <h1 id="pageTitle">Overview</h1>
-                <div class="user-info">
-                    <span id="userName">Welcome, User</span>
+                <div class="header-left">
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 id="pageTitle">Overview</h1>
+                </div>
+                
+                <div class="header-right">
+                    <div class="header-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search..." id="globalSearch">
+                    </div>
+                    <div class="header-notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            <span id="userInitial">U</span>
+                        </div>
+                        <div class="user-info-header">
+                            <span id="userName">Welcome, User</span>
+                            <small>Administrator</small>
+                        </div>
+                    </div>
                 </div>
             </header>
             
+            <!-- Dashboard Content -->
             <div class="dashboard-content">
                 <!-- Overview Page -->
-                <div id="overview" class="page">
+                <section id="overview" class="page active-page">
+                    <div class="page-header">
+                        <div>
+                            <h2>Dashboard Overview</h2>
+                            <p>Welcome back! Here's what's happening with your students today.</p>
+                        </div>
+                        <button class="btn-primary" onclick="navigateTo('add-student')">
+                            <i class="fas fa-plus"></i> Add New Student
+                        </button>
+                    </div>
+                    
                     <div class="stats-grid">
                         <div class="stat-card">
-                            <h3>Total Students</h3>
-                            <p id="totalStudents">0</p>
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Total Students</h3>
+                                <p id="totalStudents">0</p>
+                                <span class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i> 12% increase
+                                </span>
+                            </div>
                         </div>
+                        
                         <div class="stat-card">
-                            <h3>Average Age</h3>
-                            <p id="averageAge">0</p>
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Average Age</h3>
+                                <p id="averageAge">0</p>
+                                <span class="stat-change">Last 30 days</span>
+                            </div>
                         </div>
+                        
                         <div class="stat-card">
-                            <h3>Youngest Student</h3>
-                            <p id="youngestAge">0</p>
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                <i class="fas fa-child"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Youngest Student</h3>
+                                <p id="youngestAge">0</p>
+                                <span class="stat-change">Age in years</span>
+                            </div>
                         </div>
+                        
                         <div class="stat-card">
-                            <h3>Oldest Student</h3>
-                            <p id="oldestAge">0</p>
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Oldest Student</h3>
+                                <p id="oldestAge">0</p>
+                                <span class="stat-change">Age in years</span>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="recent-students">
-                        <h2>Recent Students</h2>
+                        <div class="section-header">
+                            <h2><i class="fas fa-clock"></i> Recent Students</h2>
+                            <a href="#" onclick="navigateTo('students'); return false;" class="view-all">
+                                View All <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        <div class="table-container">
+                            <table class="students-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Student Name</th>
+                                        <th>Email</th>
+                                        <th>Age</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentStudentsTable">
+                                    <tr><td colspan="5" class="text-center">Loading students...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Students Page -->
+                <section id="students" class="page">
+                    <div class="page-header">
+                        <div>
+                            <h2><i class="fas fa-users"></i> All Students</h2>
+                            <p>Manage and view all registered students</p>
+                        </div>
+                        <div class="header-actions">
+                            <div class="search-wrapper">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="searchStudents" placeholder="Search by name or email..." class="search-input">
+                            </div>
+                            <button class="btn-secondary" onclick="exportData()">
+                                <i class="fas fa-download"></i> Export
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
                         <table class="students-table">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
+                                    <th>#</th>
+                                    <th>Student Name</th>
                                     <th>Email</th>
                                     <th>Age</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody id="recentStudentsTable">
-                                <tr><td colspan="4" class="text-center">Loading students...</td></tr>
+                            <tbody id="studentsTable">
+                                <tr><td colspan="6" class="text-center">Loading students...</td></tr>
                             </tbody>
                         </table>
                     </div>
-                </div>
-                
-                <!-- Students Page -->
-                <div id="students" class="page" style="display:none;">
-                    <div class="page-header">
-                        <h2>All Students</h2>
-                        <input type="text" id="searchStudents" placeholder="Search students..." class="search-input">
-                    </div>
-                    <table class="students-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Age</th>
-                            </tr>
-                        </thead>
-                        <tbody id="studentsTable">
-                            <tr><td colspan="4" class="text-center">Loading students...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+                </section>
                 
                 <!-- Add Student Page -->
-                <div id="add-student" class="page" style="display:none;">
-                    <h2>Add New Student</h2>
-                    <form id="addStudentForm" class="auth-form">
-                        <div class="form-group">
-                            <label for="studentName">Name</label>
-                            <input type="text" id="studentName" placeholder="Enter student name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="studentEmail">Email</label>
-                            <input type="email" id="studentEmail" placeholder="Enter student email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="studentAge">Age</label>
-                            <input type="number" id="studentAge" placeholder="Enter student age" required>
-                        </div>
-                        <div id="addStudentError" class="error-message" style="display: none;"></div>
-                        <div id="addStudentSuccess" class="success-message" style="display: none;"></div>
-                        <button type="submit" class="btn-primary">Add Student</button>
-                    </form>
-                </div>
-                
-                <!-- Profile Page -->
-                <div id="profile" class="page" style="display:none;">
-                    <h2>My Profile</h2>
-                    <div class="profile-card">
-                        <div class="profile-info">
-                            <p><strong>Name:</strong> <span id="profileName"></span></p>
-                            <p><strong>Email:</strong> <span id="profileEmail"></span></p>
-                            <p><strong>Age:</strong> <span id="profileAge"></span></p>
-                            <p><strong>Member Since:</strong> <span id="profileJoined"></span></p>
+                <section id="add-student" class="page">
+                    <div class="page-header">
+                        <div>
+                            <h2><i class="fas fa-user-plus"></i> Add New Student</h2>
+                            <p>Fill in the details to register a new student</p>
                         </div>
                     </div>
-                </div>
+                    
+                    <div class="form-container">
+                        <div class="form-card">
+                            <form id="addStudentForm" class="auth-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="studentName">
+                                            <i class="fas fa-user"></i> Full Name
+                                        </label>
+                                        <input type="text" id="studentName" placeholder="Enter full name" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="studentEmail">
+                                            <i class="fas fa-envelope"></i> Email Address
+                                        </label>
+                                        <input type="email" id="studentEmail" placeholder="Enter email address" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="studentAge">
+                                            <i class="fas fa-calendar-alt"></i> Age
+                                        </label>
+                                        <input type="number" id="studentAge" placeholder="Enter age" required min="1" max="100">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="studentCourse">
+                                            <i class="fas fa-book"></i> Course
+                                        </label>
+                                        <select id="studentCourse">
+                                            <option value="">Select Course</option>
+                                            <option value="Computer Science">Computer Science</option>
+                                            <option value="Engineering">Engineering</option>
+                                            <option value="Business">Business</option>
+                                            <option value="Medicine">Medicine</option>
+                                            <option value="Law">Law</option>
+                                            <option value="Arts">Arts</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div id="addStudentError" class="error-message" style="display: none;"></div>
+                                <div id="addStudentSuccess" class="success-message" style="display: none;"></div>
+                                
+                                <div class="form-actions">
+                                    <button type="reset" class="btn-secondary">
+                                        <i class="fas fa-undo"></i> Reset
+                                    </button>
+                                    <button type="submit" class="btn-primary">
+                                        <i class="fas fa-save"></i> Register Student
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Profile Page -->
+                <section id="profile" class="page">
+                    <div class="page-header">
+                        <div>
+                            <h2><i class="fas fa-user-circle"></i> My Profile</h2>
+                            <p>View and manage your account information</p>
+                        </div>
+                        <button class="btn-secondary" onclick="editProfile()">
+                            <i class="fas fa-edit"></i> Edit Profile
+                        </button>
+                    </div>
+                    
+                    <div class="profile-container">
+                        <div class="profile-card">
+                            <div class="profile-header">
+                                <div class="profile-avatar">
+                                    <span id="profileInitial">U</span>
+                                </div>
+                                <div class="profile-title">
+                                    <h3 id="profileName">User Name</h3>
+                                    <span class="profile-role">Administrator</span>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-body">
+                                <div class="profile-info-grid">
+                                    <div class="profile-info-item">
+                                        <label><i class="fas fa-envelope"></i> Email</label>
+                                        <p id="profileEmail">user@email.com</p>
+                                    </div>
+                                    <div class="profile-info-item">
+                                        <label><i class="fas fa-calendar-alt"></i> Age</label>
+                                        <p id="profileAge">0</p>
+                                    </div>
+                                    <div class="profile-info-item">
+                                        <label><i class="fas fa-clock"></i> Member Since</label>
+                                        <p id="profileJoined">N/A</p>
+                                    </div>
+                                    <div class="profile-info-item">
+                                        <label><i class="fas fa-user-tag"></i> Role</label>
+                                        <p>Administrator</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Settings Page -->
+                <section id="settings" class="page">
+                    <div class="page-header">
+                        <div>
+                            <h2><i class="fas fa-cog"></i> Settings</h2>
+                            <p>Manage your application preferences</p>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-container">
+                        <div class="settings-card">
+                            <h3><i class="fas fa-palette"></i> Theme Preferences</h3>
+                            <div class="settings-options">
+                                <button class="theme-btn active" onclick="setTheme('light')">
+                                    <i class="fas fa-sun"></i> Light
+                                </button>
+                                <button class="theme-btn" onclick="setTheme('dark')">
+                                    <i class="fas fa-moon"></i> Dark
+                                </button>
+                                <button class="theme-btn" onclick="setTheme('auto')">
+                                    <i class="fas fa-adjust"></i> Auto
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-bell"></i> Notifications</h3>
+                            <div class="settings-options">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                    <span>Email Notifications</span>
+                                </label>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                    <span>Push Notifications</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
-        </div>
+        </main>
     </div>
     
     <script src="js/app.js"></script>
